@@ -8,6 +8,7 @@ PyPlyr is a Python package designed to provide a familiar and efficient data man
 
 ```python
 import pandas as pd
+from pyplyr import *
 df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                    'B': [10, 20, 30, 40, 50, 60]})
 
