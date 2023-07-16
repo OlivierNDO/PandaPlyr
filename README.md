@@ -19,12 +19,32 @@ new_df = df >> group_by('A', 'Z') >> summarise(AVG_B = ('B', 'mean'))
 print(new_df)
 ```
 
+<table>
+<tr><td>
+
+|    | A   | Z   |   B |
+|---:|:----|:----|----:|
+|  0 | foo | x   |  10 |
+|  1 | foo | x   |  20 |
+|  2 | foo | y   |  30 |
+|  3 | bar | x   |  40 |
+|  4 | bar | x   |  50 |
+|  5 | bar | y   |  60 |
+
+
+</td><td>
+------>
+</td><td>
+
 | A   | Z | AVG_B |
 |-----|---|-------|
 | foo | x | 15.0  |
 | foo | y | 30.0  |
 | bar | x | 45.0  |
 | bar | y | 60.0  |
+
+</td></tr> 
+</table>
 
 
 Note that you can pass the columns as separate arguments, or inside a list. By default, it will not return indices.
