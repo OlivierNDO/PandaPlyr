@@ -223,73 +223,55 @@ def rename(df, **kwargs):
     return df_copy
 
 
+
 @Pipe
-def arrange(df, *args, **kwargs):
+def arrange(df, column_name, order=None, ascending=None):
     """
-    Function to sort a pandas DataFrame by one or more columns.
-    This function is synonymous with order_by().
+    Function to sort a pandas DataFrame by a column. This function is synonymous with order_by().
 
     Parameters:
     -----------
     df : pandas.DataFrame
         The input DataFrame.
-    *args : str
-        The column names to sort by.
-    **kwargs : dict, optional
-        Additional keyword arguments to be passed to the sort_values function.
+    column_name : str
+        The column name to sort by.
+    order : str, optional
+        String indicating sort order - either "asc" or "desc". If not provided or invalid, ascending sort order is assumed.
+    ascending : bool, optional
+        Boolean indicating whether to sort in ascending order. If provided, this argument takes precedence over 'order'.
 
     Returns:
     --------
     pandas.DataFrame
         The sorted DataFrame.
 
-    Example Usage:
-    --------------
-    df = pd.DataFrame(...)
-    df_result = df >> arrange('column_name')
-    """
-    return df.sort_values(*args, **kwargs)
-
-
-@Pipe
-def arrange(df, *args, **kwargs):
-    """
-    Function to sort a pandas DataFrame by one or more columns.
-    This function is synonymous with order_by().
-
-    Parameters:
-    -----------
-    df : pandas.DataFrame
-        The input DataFrame.
-    *args : str
-        The column names to sort by.
-    **kwargs : dict, optional
-        Additional keyword arguments to be passed to the sort_values function.
-
-    Returns:
-    --------
-    pandas.DataFrame
-        The sorted DataFrame.
+    Raises:
+    -------
+    ValueError
+        If 'order' is not either "asc" or "desc" or if 'ascending' is not a boolean.
 
     Example Usage:
     --------------
     import pandas as pd
     df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
-                       'B': [10, 20, 30, 40, 50, 60],
-                       'C': [1, 2, 3, 4, 5, 6]})
-
-    # Option 1: columns as a list
-    new_df = df >> arrange(['A', 'B'], ascending = False)
-
-    # Option 2: columns as unique arguments
-    new_df = df >> arrange('A', 'B', ascending = False)
-
+                       'B': [10, 20, 30, 40, 50, 60]})
+    new_df = df >> arrange('B', 'desc')
     """
-    if isinstance(args[0], list):
-        sort_cols = args[0]
-    else:
-        sort_cols = list(args)
-    return df.sort_values(sort_cols, **kwargs)
+    # If ascending argument provided, use it. Else, use order argument
+    if ascending is None:
+        if isinstance(order, str):
+            if order.lower() == 'desc':
+                ascending = False
+            elif order.lower() == 'asc':
+                ascending = True
+            else:
+                raise ValueError('Order should be either "asc" or "desc".')
+        else:
+            ascending = True  # Default behavior
+    elif not isinstance(ascending, bool):
+        raise ValueError('Ascending should be either True or False.')
+    return df.sort_values(by=column_name, ascending=ascending)
+
 
 
 order_by = arrange
