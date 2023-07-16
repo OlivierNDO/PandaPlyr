@@ -15,7 +15,17 @@ df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                    'Z' : ['x', 'x', 'y', 'x', 'x', 'y'],
                    'B': [10, 20, 30, 40, 50, 60]})
 new_df = df >> group_by('A', 'Z') >> summarise(AVG_B = ('B', 'mean'))
+print(new_df)
 ```
+
+| A   | Z | AVG_B |
+|-----|---|-------|
+| foo | x | 15.0  |
+| foo | y | 30.0  |
+| bar | x | 45.0  |
+| bar | y | 60.0  |
+
+
 Note that you can pass the columns as separate arguments, or inside a list. By default, it will not return indices.
 
 
