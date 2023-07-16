@@ -223,33 +223,4 @@ The Pipe class allows us to use the '>>' operator to chain operations together i
 
 
 
-<table>
-<tr><td>
-
-|   | A     | B |
-|---|-------|---|
-| 0 | foo   | 1 |
-| 1 | foo   | 1 |
-| 2 | bar   | 2 |
-| 3 | other | 3 |
-
-</td><td>
------->
-</td><td>
-
-|   | A     | B | C |
-|---|-------|---|---|
-| 0 | foo   | 1 |10 |
-| 1 | foo   | 1 |30 |
-| 2 | bar   | 2 |20 |
-| 3 | other | 3 | 0 |
-
-</td></tr> 
-</table>
-
-
-
-
-
-
 ## Install
