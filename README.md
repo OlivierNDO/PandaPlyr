@@ -214,6 +214,8 @@ The Pipe class allows us to use the '>>' operator to chain operations together i
 | 3 | other | 3 |
 
 </td><td>
+------>
+</td><td>
 
 |   | A     | B | C |
 |---|-------|---|---|
