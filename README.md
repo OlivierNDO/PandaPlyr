@@ -204,8 +204,7 @@ The Pipe class allows us to use the '>>' operator to chain operations together i
 
 
 <table>
-    <tr>
-        <td>
+<tr><td>
 
 |   | A     | B |
 |---|-------|---|
@@ -214,11 +213,7 @@ The Pipe class allows us to use the '>>' operator to chain operations together i
 | 2 | bar   | 2 |
 | 3 | other | 3 |
 
-        </td>
-        <td style="vertical-align: middle;">
-            <img src="images/arrow_icon.png" style="width: 30px; height: 30px; transform: rotate(0deg);"> 
-        </td>
-        <td>
+</td><td>
 
 |   | A     | B | C |
 |---|-------|---|---|
@@ -227,8 +222,7 @@ The Pipe class allows us to use the '>>' operator to chain operations together i
 | 2 | bar   | 2 |20 |
 | 3 | other | 3 | 0 |
 
-        </td>
-    </tr>
+</td></tr> 
 </table>
 
 
