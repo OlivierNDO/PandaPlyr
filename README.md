@@ -27,7 +27,7 @@ print(new_df)
 
 
 Note that you can pass the columns as separate arguments, or inside a list. By default, it will not return indices.
-
+---------------------------------------------
 
 #### summarise()
 This function allows you to perform aggregation operations on your DataFrame.
