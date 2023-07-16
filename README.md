@@ -34,15 +34,21 @@ The mutate function lets you add new columns or modify existing ones.
 
 
 #### where()
+This function allows you to filter rows in your DataFrame based on a condition.
 #### select()
+The select function can be used to select specific columns in your DataFrame.
 #### rename()
+You can rename columns in your DataFrame using the rename function.
 #### arrange()
-#### left_join()
-#### right_join()
-#### full_join()
-#### union()
-#### union_all()
+Use arrange to sort your DataFrame by one or more columns.
+#### left_join(), right_join(), full_join()
+These functions allow you to join multiple DataFrames together.
+#### union() and union_all()
+union and union_all let you concatenate two DataFrames together.
+
+Note that union removes duplicates while union_all doesn't.
 #### distinct()
+distinct removes duplicate rows in your DataFrame.
 #### Pipe class
 
 The Pipe class allows us to use the '>>' operator to chain operations together in a pipeline.
