@@ -62,18 +62,20 @@ from pyplyr import *
 df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                    'B': [10, 20, 30, 40, 50, 60],
                    'C': [1, 2, 3, 4, 5, 6]})
-new_df = df >> mutate(B_X_2 = 'B * 2', B_PLUS_C = 'B + C')
+new_df = df >> mutate(B_X_2 = 'B * 2',
+                      B_PLUS_C = 'B + C',
+                      CONST = 1)
 print(new_df)
 ```
 
-|    | A   |   B |   C |   B_X_2 |   B_PLUS_C |
-|---:|:----|----:|----:|--------:|-----------:|
-|  0 | foo |  10 |   1 |      20 |         11 |
-|  1 | foo |  20 |   2 |      40 |         22 |
-|  2 | foo |  30 |   3 |      60 |         33 |
-|  3 | bar |  40 |   4 |      80 |         44 |
-|  4 | bar |  50 |   5 |     100 |         55 |
-|  5 | bar |  60 |   6 |     120 |         66 |
+|    | A   |   B |   C |   B_X_2 |   B_PLUS_C | CONST |
+|---:|:----|----:|----:|--------:|-----------:|------:|
+|  0 | foo |  10 |   1 |      20 |         11 |   1   |
+|  1 | foo |  20 |   2 |      40 |         22 |   1   |
+|  2 | foo |  30 |   3 |      60 |         33 |   1   |
+|  3 | bar |  40 |   4 |      80 |         44 |   1   |
+|  4 | bar |  50 |   5 |     100 |         55 |   1   |
+|  5 | bar |  60 |   6 |     120 |         66 |   1   |
 
 
 
@@ -399,6 +401,28 @@ print(new_df)
 ---------------------------------------------
 
 
+#### dropna()
+replaces numpy.nan, None, and (unlike pandas fillna) it works on numpy.inf and -numpy.inf
+```python
+import pandas as pd
+from pyplyr import *
+df = pd.DataFrame({'A': [1, np.nan, None, np.inf, -np.inf]})
+new_df = df >> fillna('A', 0)
+print(new_df)
+```
+
+|    | A     |
+|---:|:------|
+|  0 | 1.0   |
+|  1 | 0.0   |
+|  2 | 0.0   |
+|  3 | 0.0   |
+|  4 | 0.0   |
+
+---------------------------------------------
+
+
+
 
 The Pipe class allows us to use the '>>' operator to chain operations together in a pipeline.
 
@@ -413,6 +437,7 @@ You can define your own functions using the @Pipe decorator
 ```python
 import pandas as pd
 from pyplyr import *
+
 @Pipe
 def median_impute(df, *args):
     """Replace missing values with the median value in the column"""

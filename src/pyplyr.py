@@ -124,7 +124,7 @@ def mutate(df, **kwargs):
     df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                        'B': [10, 20, 30, 40, 50, 60],
                        'C': [1, 2, 3, 4, 5, 6]})
-    new_df = df >> mutate(B_X_2 = 'B * 2', B_PLUS_C = 'B + C')
+    new_df = df >> mutate(B_X_2 = 'B * 2', B_PLUS_C = 'B + C', D = 1)
     """
     df_copy = df.copy()
     for column, operation in kwargs.items():
@@ -135,10 +135,12 @@ def mutate(df, **kwargs):
             operations = [f'df_copy["{op}"]' if op in df_copy.columns else op for op in operations]
             # join operations into a single string and evaluate
             df_copy[column] = eval(''.join(operations))
-        else:
+        elif callable(operation):
             df_copy[column] = operation(df_copy)
+        else:
+            # if operation is not a string or a function, assign it to the column directly
+            df_copy[column] = operation
     return df_copy
-
 
 
 @Pipe
@@ -604,6 +606,30 @@ def fillna(df, column, value=0):
     """
     return df.assign(**{column: df[column].fillna(value).replace([np.inf, -np.inf], value)})
 
+
+
+
+@Pipe
+def drop_na(df, *cols):
+    """
+    A function to drop rows from a DataFrame where specified columns have missing values.
+    This function can be used in a pyplyr pipeline.
+
+    Parameters:
+    -----------
+    df : pandas DataFrame
+        The DataFrame from which to drop rows.
+    cols : str
+        One or more column names to consider when dropping rows. 
+        If no columns are specified, all columns are considered.
+
+    Returns:
+    --------
+    pandas DataFrame
+        A new DataFrame with rows dropped where the specified columns have missing values.
+    """
+    cols = cols if cols else None
+    return df.dropna(subset=cols)
 
 
 # TO DO

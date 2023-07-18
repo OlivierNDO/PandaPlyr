@@ -6,7 +6,89 @@ import pandas as pd
 import re
 
 # Import modules
+import src.pyplyr as pp
+
+
+
+# Import modules
 from src.pyplyr import *
+
+
+
+@Pipe
+def mutate(df, **kwargs):
+    """
+    Function to create new columns or modify existing columns in a pandas DataFrame.
+
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        The input DataFrame.
+    **kwargs : dict
+        The column names and corresponding operations.
+
+    Returns:
+    --------
+    pandas.DataFrame
+        The modified DataFrame.
+
+    Example Usage:
+    --------------
+    import pandas as pd
+    df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
+                       'B': [10, 20, 30, 40, 50, 60],
+                       'C': [1, 2, 3, 4, 5, 6]})
+    new_df = df >> mutate(B_X_2 = 'B * 2', B_PLUS_C = 'B + C')
+    """
+    df_copy = df.copy()
+    for column, operation in kwargs.items():
+        if isinstance(operation, str):
+            # split by operations
+            operations = re.split(r'(\W+)', operation)
+            # replace column names with df['column_name']
+            operations = [f'df_copy["{op}"]' if op in df_copy.columns else op for op in operations]
+            # join operations into a single string and evaluate
+            df_copy[column] = eval(''.join(operations))
+        else:
+            df_copy[column] = operation(df_copy)
+    return df_copy
+
+
+
+
+from pyplyr import Pipe
+import re
+
+
+
+
+    
+df = pd.DataFrame({'A': ['foo', 'bar', 'other', 'other']})
+new_df = df >> mutate(B = 1)
+
+
+
+
+
+
+toy_df = pp.read_titanic_dataset()
+
+toy_df.head()
+
+
+
+df = (
+    toy_df >>
+    pp.drop_na('age') >> 
+    pp.mutate(is_child = 'age < 18',
+              count_col = 1) >> 
+    pp.group_by('is_child', 'survived') >> 
+    pp.summarise(Count = ('age', 'count'))
+)
+
+
+
+df = pd
 
 
 @Pipe
@@ -22,23 +104,6 @@ df = pd.DataFrame({'A': ['foo', None, 'foo', 'bar', 'bar', 'bar'],
                    'C': [1, 2, 3, None, 5, 6]})
 
 imp_df = df >> median_impute('B', 'C')
-
-
-
-
-
-
-toy_df = read_titanic_dataset()
-
-toy_df.head()
-
-
-
-
-
-
-
-
 
 
 
