@@ -515,7 +515,7 @@ def full_join(df1, df2, on=None, fill_na=None, **kwargs):
 
 
 @Pipe
-def union(df1, df2, **kwargs):
+def union(df1, df2, reset_index = True, **kwargs):
     """
     Function to concatenate two pandas DataFrames and remove duplicates.
 
@@ -525,6 +525,8 @@ def union(df1, df2, **kwargs):
         The first DataFrame.
     df2 : pandas.DataFrame
         The second DataFrame.
+    reset_index : bool, optional
+        Reset index of combined dataframe. Default is True.
     **kwargs : dict, optional
         Additional keyword arguments to be passed to the concat function.
 
@@ -540,11 +542,14 @@ def union(df1, df2, **kwargs):
     df2 = pd.DataFrame({'A': [2, 2, 2], 'B': ['foo', 'bar', 'bar']})
     df3 = df1 >> union(df2)
     """
-    return pd.concat([df1, df2], **kwargs).drop_duplicates()
+    out_df = pd.concat([df1, df2], **kwargs).drop_duplicates()
+    if reset_index:
+        out_df = out_df.reset_index(drop = True)
+    return out_df
 
 
 @Pipe
-def union_all(df1, df2, **kwargs):
+def union_all(df1, df2, reset_index = True, **kwargs):
     """
     Function to concatenate two pandas DataFrames and without removing duplicates.
 
@@ -554,6 +559,8 @@ def union_all(df1, df2, **kwargs):
         The first DataFrame.
     df2 : pandas.DataFrame
         The second DataFrame.
+    reset_index : bool, optional
+        Reset index of combined dataframe. Default is True.
     **kwargs : dict, optional
         Additional keyword arguments to be passed to the concat function.
 
@@ -569,7 +576,10 @@ def union_all(df1, df2, **kwargs):
     df2 = pd.DataFrame({'A': [2, 2, 2], 'B': ['foo', 'bar', 'bar']})
     df3 = df1 >> union(df2)
     """
-    return pd.concat([df1, df2], **kwargs)
+    out_df = pd.concat([df1, df2], **kwargs)
+    if reset_index:
+        out_df = out_df.reset_index(drop = True)
+    return out_df
 
 
 @Pipe

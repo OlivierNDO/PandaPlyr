@@ -262,6 +262,7 @@ print(new_df)
 These functions allow you to join multiple DataFrames together.
 ```python
 import pandas as pd
+from pyplyr import *
 df1 = pd.DataFrame({'A': ['foo', 'bar', 'other'],
                     'B': [1, 2, 3]})
 
@@ -288,16 +289,92 @@ union and union_all let you concatenate two DataFrames together.
 
 Note that union removes duplicates while union_all doesn't.
 ```python
+import pandas as pd
+from pyplyr import *
+df1 = pd.DataFrame({'A': ['foo', 'bar', 'other'],
+                    'B': [1, 2, 3]})
 
+df2 = pd.DataFrame({'A': ['other', 'bar', 'foo'],
+                    'B': [3, 4, 5]})
+
+new_df = df1 >> union(df2)
+print(new_df)
 ```
+
+|    | A     |   B |
+|---:|:------|----:|
+|  0 | foo   |   1 |
+|  1 | bar   |   2 |
+|  2 | other |   3 |
+|  3 | bar   |   4 |
+|  4 | foo   |   5 |
+
+
+```python
+import pandas as pd
+from pyplyr import *
+df1 = pd.DataFrame({'A': ['foo', 'bar', 'other'],
+                    'B': [1, 2, 3]})
+
+df2 = pd.DataFrame({'A': ['other', 'bar', 'foo'],
+                    'B': [3, 4, 5]})
+
+new_df = df1 >> union_all(df2)
+print(new_df)
+```
+
+|    | A     |   B |
+|---:|:------|----:|
+|  0 | foo   |   1 |
+|  1 | bar   |   2 |
+|  2 | other |   3 |
+|  3 | other |   3 |
+|  4 | bar   |   4 |
+|  5 | foo   |   5 |
+
+
 
 ---------------------------------------------
 
 #### distinct()
 distinct removes duplicate rows in your DataFrame.
 ```python
+import pandas as pd
+from pyplyr import *
+df = pd.DataFrame({'A': ['foo', 'bar', 'other', 'other']})
 
+new_df = df >> distinct()
+print(new_df)
 ```
+
+<table>
+<tr><td>
+
+|    | A     |
+|---:|:------|
+|  0 | foo   |
+|  1 | bar   |
+|  2 | other |
+|  3 | other |
+
+
+</td><td>
+
+------>
+
+</td><td>
+
+|    | A     |
+|---:|:------|
+|  0 | foo   |
+|  1 | bar   |
+|  2 | other |
+
+</td></tr> 
+</table>
+
+
+
 
 ---------------------------------------------
 
