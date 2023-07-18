@@ -92,6 +92,7 @@ top_student_pyplyr = (
     )
 ```
 
+The same answer takes 8 fewer lines, ~ 145 fewer characters, and is lot more readable.
 
 | StudentID | AverageGrade |
 |:---------:|:------------:|
