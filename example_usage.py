@@ -10,13 +10,13 @@ from src import pyplyr as pp
 from src.pyplyr import *
 
 import importlib
-importlib.reload(src.pyplyr)
+#importlib.reload(src.pyplyr)
 
 df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                    'B': [10, 20, 30, 40, 50, 60]})
 
 
-df >> pp.arrange('B', 'desc')
+df >> arrange('B', 'desc')
 
 
 new_df = (
