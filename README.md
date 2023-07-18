@@ -2,6 +2,104 @@
 
 PyPlyr is a Python package designed to provide a familiar and efficient data manipulation experience similar to the popular dplyr package in R. It aims to simplify and streamline the process of working with tabular data by providing a concise and intuitive syntax.
 
+
+
+## Overview and vision for PyPlyr
+The purpose of PyPlyr is to make chained operations on pandas DataFrames easier and more readable.
+
+Use case and example
+--------------------
+I have two dataframes - grade_df (left) and subject_df (right).
+
+
+<table>
+<tr><td>
+
+| StudentID |   Subject   | Grade  |
+|:---------:|:-----------:|:------:|
+|     1     |   CompSci   |   80   |
+|     1     |   English   |   85   |
+|     1     |   History   |   75   |
+|     1     | LinearAlg   |   75   |
+|    ...    |     ...     |   ...  |
+
+
+
+</td><td>
+                 
+</td>
+<td>
+
+|      Subject     | SubjectType |
+|:----------------:|:-----------:|
+|     CompSci      |     STEM    |
+|   LinearAlg      |     STEM    |
+|    Philosophy    |  Humanities |
+|     English      |  Humanities |
+|     History      |  Humanities |
+
+
+</td></tr> 
+</table>
+
+Merge the dataframes and find the student with the highest average grade for Humanities classes only,
+but exclude any students ('StudentID') who are not enrolled in at least 2 humanities courses.
+
+```python
+import pandas as pd
+import pyplyr as pp
+grade_df = pp.read_grades_dataset()
+subject_df = pp.read_subject_dataset()
+```
+
+In pandas
+----------
+```python
+merged_df = pd.merge(grade_df, subject_df, on='Subject')
+
+humanities_df = merged_df[merged_df['SubjectType'] == 'Humanities']
+
+course_counts = (
+    humanities_df
+    .groupby('StudentID', as_index = False)
+    .agg(CourseCount = ('Subject', 'count'))
+)
+
+filtered_students =  course_counts.loc[course_counts['CourseCount'] >= 2][['StudentID']]
+
+top_student_pandas = (
+    humanities_df.loc[humanities_df['StudentID'].isin(filtered_students['StudentID'])]
+    .groupby('StudentID', as_index=False)
+    .agg(AverageGrade = ('Grade', 'mean'))
+    .sort_values('AverageGrade', ascending = False)
+    .head(1)
+)
+```
+
+In PyPlyr
+----------
+```python
+top_student_pyplyr = (
+    grade_df >>
+    pp.inner_join(subject_df, 'Subject') >>
+    pp.where('SubjectType == "Humanities"') >>
+    pp.group_by('StudentID', 'SubjectType') >>
+    pp.summarise(AverageGrade = ('Grade', 'mean'), CourseCount = ('Grade', 'count')) >>
+    pp.where('(CourseCount >= 2)') >>
+    pp.mutate(MaxAverageGrade = 'AverageGrade.max()') >>
+    pp.where('MaxAverageGrade == AverageGrade') >>
+    pp.select('StudentID', 'AverageGrade')
+    )
+```
+
+
+| StudentID | AverageGrade |
+|:---------:|:------------:|
+|     2     |     87.0     |
+
+
+
+
 ## Features
 
 Here's a quick summary of the classes, methods, and functions we'll cover:
@@ -488,3 +586,19 @@ print(new_df)
 
 
 ## Install
+
+
+
+
+
+
+## To-do list
+
+- [X] Add error handling to pyplyr.py
+- [ ] Add unit tests for new functions
+
+
+## Future features
+
+- [ ] Polars backend
+- [ ] Intelligent multiprocessing

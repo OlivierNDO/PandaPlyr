@@ -62,11 +62,23 @@ def group_by(df, *args, **kwargs):
                        'B': [10, 20, 30, 40, 50, 60]})
     new_df = df >> group_by('A', 'Z') >> summarise(AVG_B = ('B', 'mean'))
     """
+    # Error handling
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError(f"Expected pandas DataFrame, but got {type(df).__name__}")
+        
+    # Set as_index to False by default
     kwargs.setdefault('as_index', False)
+    
+    # Conditionally create a list for group columns if constants are provided
     if isinstance(args[0], list):
         group_columns = args[0]
     else:
         group_columns = list(args)
+        
+    # Ensure group columns are present in the DataFrame
+    for gc in group_columns:
+        if gc not in df.columns:
+            raise KeyError(f"Column '{col}' does not exist in the DataFrame")
     return df.groupby(group_columns, **kwargs)
 
 
@@ -96,28 +108,27 @@ def summarise(df, *args, **kwargs):
                        'B': [10, 20, 30, 40, 50, 60]})
     new_df = df >> group_by('A') >> summarise(AVG_B = ('B', 'mean'))
     """
+    # Error handling
     return df.aggregate(*args, **kwargs)
 
 summarize = summarise
+
 
 
 @Pipe
 def mutate(df, **kwargs):
     """
     Function to create new columns or modify existing columns in a pandas DataFrame.
-
     Parameters:
     -----------
     df : pandas.DataFrame
         The input DataFrame.
     **kwargs : dict
         The column names and corresponding operations.
-
     Returns:
     --------
     pandas.DataFrame
         The modified DataFrame.
-
     Example Usage:
     --------------
     import pandas as pd
@@ -126,21 +137,30 @@ def mutate(df, **kwargs):
                        'C': [1, 2, 3, 4, 5, 6]})
     new_df = df >> mutate(B_X_2 = 'B * 2', B_PLUS_C = 'B + C', D = 1)
     """
+    # Error handling
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError(f"Expected pandas DataFrame, but got {type(df).__name__}")
+    
     df_copy = df.copy()
     for column, operation in kwargs.items():
-        if isinstance(operation, str):
-            # split by operations
-            operations = re.split(r'(\W+)', operation)
-            # replace column names with df['column_name']
-            operations = [f'df_copy["{op}"]' if op in df_copy.columns else op for op in operations]
-            # join operations into a single string and evaluate
-            df_copy[column] = eval(''.join(operations))
-        elif callable(operation):
-            df_copy[column] = operation(df_copy)
-        else:
-            # if operation is not a string or a function, assign it to the column directly
-            df_copy[column] = operation
+        try:
+            if isinstance(operation, str):
+                # split by operations
+                operations = re.split(r'(\W+)', operation)
+                # replace column names with df['column_name']
+                operations = [f'df_copy["{op}"]' if op in df_copy.columns else op for op in operations]
+                # join operations into a single string and evaluate
+                df_copy[column] = eval(''.join(operations))
+            elif callable(operation):
+                df_copy[column] = operation(df_copy)
+            else:
+                # if operation is not a string or a function, assign it to the column directly
+                df_copy[column] = operation
+        except Exception as e:
+            raise ValueError(f"Error processing operation '{operation}' for column '{column}': {str(e)}")
     return df_copy
+
+
 
 
 @Pipe
@@ -168,6 +188,9 @@ def where(df, condition):
                        'C': [1, 2, 3, 4, 5, 6]})
     new_df = df >> where('A == "foo" | C == 6')
     """
+    # Error handling
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError(f"Expected pandas DataFrame, but got {type(df).__name__}")
     return df.query(condition)
 
 
@@ -197,6 +220,9 @@ def select(df, *args):
 
     new_df = df >> select('A', 'B')
     """
+    # Error handling
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError(f"Expected pandas DataFrame, but got {type(df).__name__}")
     return df.loc[:, list(args)]
 
 
@@ -226,6 +252,9 @@ def rename(df, **kwargs):
 
     new_df = df >> rename(Z = 'C')
     """
+    # Error handling
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError(f"Expected pandas DataFrame, but got {type(df).__name__}")
     df_copy = df.copy()
     for column, operation in kwargs.items():
         df_copy[column] = df_copy[operation]
@@ -267,6 +296,9 @@ def arrange(df, column_name, order=None, ascending=None):
                        'B': [10, 20, 30, 40, 50, 60]})
     new_df = df >> arrange('B', 'desc')
     """
+    # Error handling
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError(f"Expected pandas DataFrame, but got {type(df).__name__}")
     # If ascending argument provided, use it. Else, use order argument
     if ascending is None:
         if isinstance(order, str):
@@ -285,8 +317,6 @@ def arrange(df, column_name, order=None, ascending=None):
 
 
 order_by = arrange
-
-
 
 
 @Pipe
@@ -472,7 +502,6 @@ def full_join(df1, df2, on=None, fill_na=None, **kwargs):
     df2 = pd.DataFrame({'A': ['foo', 'bar', 'other'], 'B': [1, 2, 3]})
     df3 = df1 >> full_join(df2, on = ['A'], fill_na = {'C' : 0, 'D' : -999})
     """
-
     merged_df = df1.merge(df2, how='outer', left_on=on, right_on=on, **kwargs)
 
     if fill_na is not None:
