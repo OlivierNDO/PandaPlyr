@@ -7,7 +7,7 @@ PyPlyr is a Python package designed to provide a familiar and efficient data man
 Here's a quick summary of the classes, methods, and functions we'll cover:
 
 
-#### group_by() and summarise()
+#### group_by() and summarise() / summarize()
 These functions allow group-wise aggregations on your DataFrame for one or more columns. The syntax is as follows:
 ```python
 import pandas as pd
@@ -48,6 +48,8 @@ print(new_df)
 
 
 Note that you can pass the columns as separate arguments, or inside a list. By default, it will not return indices.
+Functions summarize() and summarise() are identical.
+
 
 ---------------------------------------------
 
@@ -374,18 +376,88 @@ print(new_df)
 </table>
 
 
+---------------------------------------------
 
+#### fillna()
+replaces numpy.nan, None, and (unlike pandas fillna) it works on numpy.inf and -numpy.inf
+```python
+import pandas as pd
+from pyplyr import *
+df = pd.DataFrame({'A': [1, np.nan, None, np.inf, -np.inf]})
+new_df = df >> fillna('A', 0)
+print(new_df)
+```
+
+|    | A     |
+|---:|:------|
+|  0 | 1.0   |
+|  1 | 0.0   |
+|  2 | 0.0   |
+|  3 | 0.0   |
+|  4 | 0.0   |
 
 ---------------------------------------------
 
-#### Pipe class
-```python
 
-```
 
 The Pipe class allows us to use the '>>' operator to chain operations together in a pipeline.
 
 ---------------------------------------------
+
+
+## User-defined functions
+
+You can define your own functions using the @Pipe decorator
+
+
+```python
+import pandas as pd
+from pyplyr import *
+@Pipe
+def median_impute(df, *args):
+    """Replace missing values with the median value in the column"""
+    for col in args:
+        col_median = np.nanmedian(df[col])
+        df = df >> fillna(col, value = col_median)
+    return df
+
+df = pd.DataFrame({'A': ['X', None, 'Y', np.inf, 'X', 'Y'],
+                   'B': [1, 2, 3, None, 5, 6]})
+
+new_df = df >> fillna('A', 'Missing') >> median_impute('B')
+print(new_df)
+```
+
+<table>
+<tr><td>
+
+|    | A      |   B |
+|---:|:-------|----:|
+|  0 | X      |   1 |
+|  1 | None   |   2 |
+|  2 | Y      |   3 |
+|  3 | np.inf |None |
+|  4 | X      |   5 |
+|  5 | Y      |   6 |
+
+
+</td><td>
+
+------>
+
+</td><td>
+
+|    | A      |   B |
+|---:|:-------|----:|
+|  0 | X      |   1 |
+|  1 | Missing|   2 |
+|  2 | Y      |   3 |
+|  3 | Missing|   3 |
+|  4 | X      |   4 |
+|  5 | Y      |   5 |
+
+</td></tr> 
+</table>
 
 
 

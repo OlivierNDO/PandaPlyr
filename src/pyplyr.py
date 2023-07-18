@@ -1,9 +1,14 @@
 ### Configuration
 ###############################################################################
 # Import packages
+import ast
 import numpy as np
 import pandas as pd
+import random
 import re
+
+# Import modules
+from src.utils import *
 
 
 ### Define Classes & Functions
@@ -93,6 +98,8 @@ def summarise(df, *args, **kwargs):
     """
     return df.aggregate(*args, **kwargs)
 
+summarize = summarise
+
 
 @Pipe
 def mutate(df, **kwargs):
@@ -131,6 +138,7 @@ def mutate(df, **kwargs):
         else:
             df_copy[column] = operation(df_copy)
     return df_copy
+
 
 
 @Pipe
@@ -276,42 +284,6 @@ def arrange(df, column_name, order=None, ascending=None):
 
 order_by = arrange
 
-@Pipe
-def left_join(df1, df2, on=None, fill_na = None, **kwargs):
-    """
-    Function to perform a left join between two pandas DataFrames.
-
-    Parameters:
-    -----------
-    df1 : pandas.DataFrame
-        The first DataFrame.
-    df2 : pandas.DataFrame
-        The second DataFrame.
-    on : str or list, optional
-        The column(s) to join on.
-    fill_na : dict, optional
-        A dictionary where keys are column names in `df2` and values are the corresponding fill values.
-    **kwargs : dict, optional
-        Additional keyword arguments to be passed to the merge function.
-
-    Returns:
-    --------
-    pandas.DataFrame
-        The joined DataFrame.
-
-    Example Usage:
-    --------------
-    import pandas as pd
-    df1 = pd.DataFrame({'A': ['foo', 'bar', 'foo', 'bar', 'foo', 'bar', 'foo', 'foo'],
-                        'B': [1, 2, 3, 4, 5, 6, 7, 8]})
-
-    df2 = pd.DataFrame({'A': ['foo', 'bar', 'foo', 'bar', 'foo', 'bar', 'foo', 'foo'],
-                        'C': [10, 20, 30, 40, 50, 60, 70, 80]})
-
-    df3 = df1 >> left_join(df2, on = 'A')
-    """
-    merged_df = df1.merge(df2, how='left', left_on=on, right_on=on, **kwargs)
-    return 
 
 
 
@@ -609,5 +581,44 @@ def distinct(df, *args):
         return df.drop_duplicates(subset=list(args))
     else:
         return df.drop_duplicates()
+    
+    
+@Pipe
+def fillna(df, column, value=0):
+    """
+    Fill missing values and infinite values in a column of the DataFrame with a specified value.
+
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        The input DataFrame.
+    column : str
+        The name of the column to fill the missing and infinite values.
+    value : Any, optional
+        The value to fill the missing and infinite values with (default: 0).
+
+    Returns:
+    --------
+    pandas.DataFrame
+        The DataFrame with missing and infinite values filled in the specified column.
+    """
+    return df.assign(**{column: df[column].fillna(value).replace([np.inf, -np.inf], value)})
+
+
+
+# TO DO
+@Pipe
+def column_search(df):
+    pass
+
+
+
+
+
+
+
+
+
+
 
 
