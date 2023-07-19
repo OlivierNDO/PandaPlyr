@@ -5,10 +5,10 @@ import sys
 import os.path
 sys.path.insert(1, os.path.dirname(sys.path[0]))
 
-from .src import pandaplyr
+from src.pandaplyr import *
 
 # Variables
-version = "0.0.3"
+version = "0.0.6"
 author = "Nick Olivier"
 
 # Function
