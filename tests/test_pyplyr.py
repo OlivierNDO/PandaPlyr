@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 
 # Import modules
-from src import pyplyr as pp
+from src import pandaplyr as pp
 
 
 ### Define Functions and Classes

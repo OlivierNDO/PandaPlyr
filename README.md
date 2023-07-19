@@ -79,7 +79,7 @@ top_student_pandas = (
 In PyPlyr
 ----------
 ```python
-top_student_pyplyr = (
+top_student_pp = (
     grade_df >>
     pp.inner_join(subject_df, 'Subject') >>
     pp.where('SubjectType == "Humanities"') >>
@@ -110,7 +110,7 @@ Here's a quick summary of the classes, methods, and functions we'll cover:
 These functions allow group-wise aggregations on your DataFrame for one or more columns. The syntax is as follows:
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                    'Z' : ['x', 'x', 'y', 'x', 'x', 'y'],
                    'B': [10, 20, 30, 40, 50, 60]})
@@ -157,7 +157,7 @@ Functions summarize() and summarise() are identical.
 The mutate function lets you add new columns or modify existing ones.
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                    'B': [10, 20, 30, 40, 50, 60],
                    'C': [1, 2, 3, 4, 5, 6]})
@@ -184,7 +184,7 @@ print(new_df)
 This function allows you to filter rows in your DataFrame based on a condition.
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                    'B': [10, 20, 30, 40, 50, 60],
                    'C': [1, 2, 3, 4, 5, 6]})
@@ -228,7 +228,7 @@ print(new_df)
 The select function can be used to select specific columns in your DataFrame.
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                    'B': [10, 20, 30, 40, 50, 60],
                    'C': [1, 2, 3, 4, 5, 6]})
@@ -275,7 +275,7 @@ print(new_df)
 You can rename columns in your DataFrame using the rename function.
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                    'B': [10, 20, 30, 40, 50, 60],
                    'C': [1, 2, 3, 4, 5, 6]})
@@ -319,7 +319,7 @@ print(new_df)
 Use arrange or order_by (which are 100% identical) to sort your DataFrame by one or more columns.
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df = pd.DataFrame({'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
                    'B': [10, 20, 30, 40, 50, 60]})
 new_df = df >> arrange('B', 'desc')
@@ -365,7 +365,7 @@ print(new_df)
 These functions allow you to join multiple DataFrames together.
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df1 = pd.DataFrame({'A': ['foo', 'bar', 'other'],
                     'B': [1, 2, 3]})
 
@@ -393,7 +393,7 @@ union and union_all let you concatenate two DataFrames together.
 Note that union removes duplicates while union_all doesn't.
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df1 = pd.DataFrame({'A': ['foo', 'bar', 'other'],
                     'B': [1, 2, 3]})
 
@@ -415,7 +415,7 @@ print(new_df)
 
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df1 = pd.DataFrame({'A': ['foo', 'bar', 'other'],
                     'B': [1, 2, 3]})
 
@@ -443,7 +443,7 @@ print(new_df)
 distinct removes duplicate rows in your DataFrame.
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df = pd.DataFrame({'A': ['foo', 'bar', 'other', 'other']})
 
 new_df = df >> distinct()
@@ -483,7 +483,7 @@ print(new_df)
 replaces numpy.nan, None, and (unlike pandas fillna) it works on numpy.inf and -numpy.inf
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df = pd.DataFrame({'A': [1, np.nan, None, np.inf, -np.inf]})
 new_df = df >> fillna('A', 0)
 print(new_df)
@@ -504,7 +504,7 @@ print(new_df)
 replaces numpy.nan, None, and (unlike pandas fillna) it works on numpy.inf and -numpy.inf
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 df = pd.DataFrame({'A': [1, np.nan, None, np.inf, -np.inf]})
 new_df = df >> fillna('A', 0)
 print(new_df)
@@ -535,7 +535,7 @@ You can define your own functions using the @Pipe decorator
 
 ```python
 import pandas as pd
-from pyplyr import *
+from pandaplyr import *
 
 @Pipe
 def median_impute(df, *args):

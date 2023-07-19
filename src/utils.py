@@ -17,7 +17,7 @@ def read_titanic_dataset():
         The loaded Titanic dataset.
     """
     current_file_path = os.path.dirname(os.path.realpath(__file__))
-    file_path = current_file_path.split('PyPlyr')[0] + 'PyPlyr/data/titanic.csv'
+    file_path = current_file_path.split('PandaPlyr')[0] + 'PandaPlyr/data/titanic.csv'
     return pd.read_csv(file_path)
 
 def read_grades_dataset():
@@ -30,7 +30,7 @@ def read_grades_dataset():
         The loaded Titanic dataset.
     """
     current_file_path = os.path.dirname(os.path.realpath(__file__))
-    file_path = current_file_path.split('PyPlyr')[0] + 'PyPlyr/data/student_grades.csv'
+    file_path = current_file_path.split('PandaPlyr')[0] + 'PandaPlyr/data/student_grades.csv'
     return pd.read_csv(file_path)
 
 def read_subject_dataset():
@@ -43,5 +43,5 @@ def read_subject_dataset():
         The loaded Titanic dataset.
     """
     current_file_path = os.path.dirname(os.path.realpath(__file__))
-    file_path = current_file_path.split('PyPlyr')[0] + 'PyPlyr/data/subject_categories.csv'
+    file_path = current_file_path.split('PandaPlyr')[0] + 'PandaPlyr/data/subject_categories.csv'
     return pd.read_csv(file_path)
