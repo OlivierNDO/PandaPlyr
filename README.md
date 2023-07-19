@@ -5,6 +5,10 @@
 PandaPlyr is a Python package designed to provide a familiar and efficient data manipulation experience similar to the popular dplyr package in R. It aims to simplify and streamline the process of working with tabular data by providing a concise and intuitive syntax.
 
 ## Install
+
+Installers for the latest version are available at the [Python
+Package Index (PyPI)](https://pypi.org/project/PandaPlyr/).
+
 ```bash
 pip install PandaPlyr
 ```
