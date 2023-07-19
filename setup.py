@@ -8,7 +8,7 @@ setup(
     description="The purpose of PyPlyr is to make chained operations on pandas DataFrames easier and more readable.",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/OlivierNDO/PyPlyr/",
+    url="https://github.com/OlivierNDO/PythonPlyr/",
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
