@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="pythonplyr",
+    name="PythonPlyr",
     version="0.0.1",
     author="Nick Olivier",
     author_email="Olivier_N@lynchburg.edu",
