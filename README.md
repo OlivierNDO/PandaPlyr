@@ -1,7 +1,13 @@
 ## <img src="images/PyPlyr_Icon.png" alt="Project Logo" width="80" height="80"> PandaPlyr
 
+[![PyPI version](https://badge.fury.io/py/PandaPlyr.svg)](https://badge.fury.io/py/PandaPlyr)
+
 PandaPlyr is a Python package designed to provide a familiar and efficient data manipulation experience similar to the popular dplyr package in R. It aims to simplify and streamline the process of working with tabular data by providing a concise and intuitive syntax.
 
+## Install
+```bash
+pip install PandaPlyr
+```
 
 
 ## Overview and vision for PandaPlyr
@@ -48,8 +54,8 @@ but exclude any students ('StudentID') who are not enrolled in at least 2 humani
 ```python
 import pandas as pd
 import PandaPlyr as pp
-grade_df = pp.read_grades_dataset()
-subject_df = pp.read_subject_dataset()
+grade_df = pp.utils.read_grades_dataset()
+subject_df = pp.utils.read_subject_dataset()
 ```
 
 In pandas
@@ -585,16 +591,9 @@ print(new_df)
 
 
 
-
-## Install
-```bash
-pip install PandaPlyr
-```
-
-
 ## To-do list
 
-- [X] Add error handling to pyplyr.py
+- [X] Add error handling to pandaplyr.py
 - [ ] Add unit tests for new functions
 
 
