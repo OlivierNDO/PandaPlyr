@@ -6,7 +6,7 @@ import pandas as pd
 import re
 
 # Import modules
-from src.utils import *
+from utils import *
 
 
 ### Define Classes & Functions
