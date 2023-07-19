@@ -47,7 +47,7 @@ but exclude any students ('StudentID') who are not enrolled in at least 2 humani
 
 ```python
 import pandas as pd
-import pandaplyr as pp
+import PandaPlyr as pp
 grade_df = pp.read_grades_dataset()
 subject_df = pp.read_subject_dataset()
 ```

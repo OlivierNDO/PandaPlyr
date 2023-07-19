@@ -48,3 +48,6 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+
+# Specific files
+example_usage.py
