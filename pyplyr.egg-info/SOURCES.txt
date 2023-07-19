@@ -1,0 +1,11 @@
+README.md
+setup.py
+pyplyr.egg-info/PKG-INFO
+pyplyr.egg-info/SOURCES.txt
+pyplyr.egg-info/dependency_links.txt
+pyplyr.egg-info/requires.txt
+pyplyr.egg-info/top_level.txt
+src/__init__.py
+src/pyplyr.py
+src/utils.py
+tests/test_pyplyr.py
