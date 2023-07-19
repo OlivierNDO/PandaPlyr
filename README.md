@@ -1,10 +1,10 @@
 ## <img src="images/PyPlyr_Icon.png" alt="Project Logo" width="80" height="80"> PyPlyr
 
-PyPlyr is a Python package designed to provide a familiar and efficient data manipulation experience similar to the popular dplyr package in R. It aims to simplify and streamline the process of working with tabular data by providing a concise and intuitive syntax.
+PandaPlyr is a Python package designed to provide a familiar and efficient data manipulation experience similar to the popular dplyr package in R. It aims to simplify and streamline the process of working with tabular data by providing a concise and intuitive syntax.
 
 
 
-## Overview and vision for PyPlyr
+## Overview and vision for PandaPlyr
 The purpose of PyPlyr is to make chained operations on pandas DataFrames easier and more readable.
 
 Use case and example
@@ -47,7 +47,7 @@ but exclude any students ('StudentID') who are not enrolled in at least 2 humani
 
 ```python
 import pandas as pd
-import pyplyr as pp
+import pandaplyr as pp
 grade_df = pp.read_grades_dataset()
 subject_df = pp.read_subject_dataset()
 ```

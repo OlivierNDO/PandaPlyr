@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="PandaPlyr",
-    version="0.0.1",
+    version="0.0.2",
     author="Nick Olivier",
     author_email="Olivier_N@lynchburg.edu",
     description="The purpose of PandaPlyr is to make chained operations on pandas DataFrames easier and more readable.",
@@ -17,9 +17,7 @@ setup(
     ],
     install_requires=[
         'numpy',
-        'os',
         'pandas',
-        're'
     ],
     python_requires='>=3.6',
 )
