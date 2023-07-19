@@ -15,7 +15,7 @@ pip install PandaPlyr
 
 
 ## Overview and vision for PandaPlyr
-The purpose of PyPlyr is to make chained operations on pandas DataFrames easier and more readable.
+The purpose of PandaPlyr is to make chained operations on pandas DataFrames easier and more readable.
 
 Use case and example
 --------------------
@@ -86,7 +86,7 @@ top_student_pandas = (
 )
 ```
 
-In PyPlyr
+In PandaPlyr
 ----------
 ```python
 top_student_pp = (
