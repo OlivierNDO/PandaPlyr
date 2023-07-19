@@ -11,6 +11,7 @@ setup(
     url="https://github.com/OlivierNDO/PandaPlyr/",
     packages=['PandaPlyr'],
     package_dir={'PandaPlyr': 'src'},
+    package_data={'PandaPlyr': ['data/*.csv']},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
