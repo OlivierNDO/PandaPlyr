@@ -587,10 +587,9 @@ print(new_df)
 
 
 ## Install
-
-
-
-
+```bash
+pip install PandaPlyr==0.0.2
+```
 
 
 ## To-do list
