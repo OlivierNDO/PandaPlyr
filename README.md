@@ -6,29 +6,26 @@ PandaPlyr is a Python package designed to provide a familiar and efficient data 
 
 ## Table of Contents
 
-- [<img src="images/PyPlyr_Icon.png" alt="Project Logo" width="80" height="80"> PandaPlyr](#<img-src="images/pyplyr_icon.png"-alt="project-logo"-width="80"-height="80">-pandaplyr)
 - [Install](#install)
-- [Use case and example](#use-case-and-example)
 - [Features](#features)
-    - [group_by() and summarise() / summarize()](#group_by()-and-summarise()-/-summarize())
-    - [mutate()](#mutate())
-    - [where()](#where())
-    - [select()](#select())
-    - [rename()](#rename())
-    - [arrange() and order_by()](#arrange()-and-order_by())
-    - [left_join(), right_join(), full_join()](#left_join(),-right_join(),-full_join())
-    - [union() and union_all()](#union()-and-union_all())
-    - [distinct()](#distinct())
-    - [fill_na()](#fill_na())
-    - [drop_na()](#drop_na())
-    - [sample_n() and sample_frac()](#sample_n()-and-sample_frac())
-    - [head() and tail()](#head()-and-tail())
+    - [group_by and summarise / summarize](#group_by-and-summarise--summarize)
+    - [mutate](#mutate)
+    - [where](#where)
+    - [select](#select)
+    - [rename](#rename)
+    - [arrange and order_by](#arrange-and-order_by)
+    - [left_join, right_join, full_join](#left_join-right_join-full_join)
+    - [union and union_all](#union-and-union_all)
+    - [distinct](#distinct)
+    - [fill_na](#fill_na)
+    - [drop_na](#drop_na)
+    - [sample_n and sample_frac](#sample_n-and-sample_frac)
+    - [head and tail](#head-and-tail)
 - [User-defined functions](#user-defined-functions)
 - [Future features](#future-features)
 - [Contact](#contact)
 
-
-## Install
+## Installing
 
 Installers for the latest version are available at the [Python
 Package Index (PyPI)](https://pypi.org/project/pandaplyr/).
