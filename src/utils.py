@@ -31,6 +31,18 @@ def read_grades_dataset():
     data_path = pkg_resources.resource_filename('PandaPlyr', 'data/student_grades.csv')
     return pd.read_csv(data_path)
 
+def read_grades_by_year_dataset():
+    """
+    Read the Grades dataset from the CSV file into a pandas Dataframe
+
+    Returns:
+    -------
+    pandas.DataFrame:
+        The loaded Grades dataset.
+    """
+    data_path = pkg_resources.resource_filename('PandaPlyr', 'data/student_grades_by_year.csv')
+    return pd.read_csv(data_path)
+
 def read_subject_dataset():
     """
     Read the Subject dataset from the CSV file into a pandas Dataframe
