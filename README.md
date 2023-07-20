@@ -648,7 +648,7 @@ print(new_df)
 
 
 ## Future features
-
+- [ ] Benchmarking module
 - [ ] Polars backend
 - [ ] Intelligent multiprocessing
 

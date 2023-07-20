@@ -76,7 +76,7 @@ def group_by(df, *args, **kwargs):
     # Ensure group columns are present in the DataFrame
     for gc in group_columns:
         if gc not in df.columns:
-            raise KeyError(f"Column '{col}' does not exist in the DataFrame")
+            raise KeyError(f"Column '{gc}' does not exist in the DataFrame")
     return df.groupby(group_columns, **kwargs)
 
 
@@ -157,8 +157,6 @@ def mutate(df, **kwargs):
         except Exception as e:
             raise ValueError(f"Error processing operation '{operation}' for column '{column}': {str(e)}")
     return df_copy
-
-
 
 
 @Pipe
