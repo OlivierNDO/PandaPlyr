@@ -59,8 +59,8 @@ df = PandaPlyr.utils.read_grades_by_year_dataset()
 | 2         | 2    | Science | 64    |
 
 
-In PandaPlyr
--------------
+##### PandaPlyr
+-----------------
 ```python
 top_five_improved = (
     df >>
@@ -83,8 +83,8 @@ top_five_improved = (
 | 170       | 22.0        |
 
 
-In pandas
-----------
+##### Pandas
+-----------------
 ```python
 avg_grades = df.groupby(['StudentID', 'Year'])['Grade'].mean().reset_index()
 
