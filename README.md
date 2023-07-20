@@ -1,4 +1,4 @@
-## <img src="images/PyPlyr_Icon.png" alt="Project Logo" width="80" height="80"> pandaplyr
+## <img src="images/PyPlyr_Icon.png" alt="Project Logo" width="80" height="80"> PandaPlyr
 
 [![PyPI version](https://badge.fury.io/py/pandaplyr.svg)](https://badge.fury.io/py/pandaplyr)
 
