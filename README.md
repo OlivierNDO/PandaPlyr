@@ -6,7 +6,7 @@ PandaPlyr is a Python package designed to provide a familiar and efficient data 
 
 ## Table of Contents
 
-- [Install](#install)
+- [Installing](#installing)
 - [Features](#features)
     - [group_by and summarise / summarize](#group_by-and-summarise--summarize)
     - [mutate](#mutate)
