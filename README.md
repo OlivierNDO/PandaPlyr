@@ -1,6 +1,7 @@
 ## <img src="images/PyPlyr_Icon.png" alt="Project Logo" width="80" height="80"> PandaPlyr
 
 [![PyPI version](https://badge.fury.io/py/pandaplyr.svg)](https://badge.fury.io/py/pandaplyr)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 PandaPlyr is a Python package designed to provide a familiar and efficient data manipulation experience similar to the popular dplyr package in R. It aims to simplify and streamline the process of working with tabular data by providing a concise and intuitive syntax. The purpose of pandaplyr is to make chained operations on pandas DataFrames easier and more readable.
 
