@@ -489,13 +489,13 @@ print(new_df)
 
 ---------------------------------------------
 
-#### fillna()
+#### fill_na()
 replaces numpy.nan, None, and (unlike pandas fillna) it works on numpy.inf and -numpy.inf
 ```python
 import pandas as pd
 from PandaPlyr import *
 df = pd.DataFrame({'A': [1, np.nan, None, np.inf, -np.inf]})
-new_df = df >> fillna('A', 0)
+new_df = df >> fill_na('A', 0)
 print(new_df)
 ```
 
@@ -510,23 +510,20 @@ print(new_df)
 ---------------------------------------------
 
 
-#### dropna()
-replaces numpy.nan, None, and (unlike pandas fillna) it works on numpy.inf and -numpy.inf
+#### drop_na()
+Removes records with numpy.nan, None, and (unlike pandas dropna) it works on numpy.inf and -numpy.inf
 ```python
 import pandas as pd
-from PandaPlyr import *
+from src.PandaPlyr import *
 df = pd.DataFrame({'A': [1, np.nan, None, np.inf, -np.inf]})
-new_df = df >> fillna('A', 0)
+new_df = df >> pp.drop_na()
 print(new_df)
 ```
 
 |    | A     |
 |---:|:------|
 |  0 | 1.0   |
-|  1 | 0.0   |
-|  2 | 0.0   |
-|  3 | 0.0   |
-|  4 | 0.0   |
+
 
 ---------------------------------------------
 

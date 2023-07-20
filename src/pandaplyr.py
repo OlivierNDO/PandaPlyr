@@ -613,7 +613,7 @@ def distinct(df, *args):
     
     
 @Pipe
-def fillna(df, column, value=0):
+def fill_na(df, column, value=0):
     """
     Fill missing values and infinite values in a column of the DataFrame with a specified value.
 
@@ -635,11 +635,10 @@ def fillna(df, column, value=0):
 
 
 
-
 @Pipe
 def drop_na(df, *cols):
     """
-    A function to drop rows from a DataFrame where specified columns have missing values.
+    A function to drop rows from a DataFrame where specified columns have missing values or infinite values.
     This function can be used in a pyplyr pipeline.
 
     Parameters:
@@ -653,10 +652,13 @@ def drop_na(df, *cols):
     Returns:
     --------
     pandas DataFrame
-        A new DataFrame with rows dropped where the specified columns have missing values.
+        A new DataFrame with rows dropped where the specified columns have missing values or infinite values.
     """
-    cols = cols if cols else None
+    cols = cols if cols else df.columns
+    for col in cols:
+        df = df.loc[np.isfinite(df[col])]
     return df.dropna(subset=cols)
+
 
 
 # TO DO

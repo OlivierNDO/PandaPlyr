@@ -2,7 +2,7 @@
 from .pandaplyr import *
 
 # Variables
-version = "0.1.5"
+version = "0.1.6"
 author = "Nick Olivier"
 
 # Function
