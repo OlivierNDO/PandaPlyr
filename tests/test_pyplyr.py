@@ -90,6 +90,15 @@ class TestDataManipulation(unittest.TestCase):
         self.assertIsInstance(grouped_df, pd.core.groupby.DataFrameGroupBy)
         self.assertEqual(list(grouped_df.groups.keys()), ['a', 'b', 'c'])
         
+    def test_head(self):
+        """
+        Tests the head function.
+        Checks if the function correctly returns the first n rows from the DataFrame.
+        """
+        head_df = self.df >> pp.head(3)
+        self.assertEqual(len(head_df), 3)
+        pd.testing.assert_frame_equal(head_df, self.df.iloc[:3])
+        
     def test_inner_join(self):
         """
         Tests the inner_join function.
@@ -134,6 +143,22 @@ class TestDataManipulation(unittest.TestCase):
         joined_df = self.df >> pp.right_join(self.df2, on='B')
         self.assertEqual(joined_df['B'].tolist(), ['a', 'a', 'b', 'b', 'd'])
 
+    def test_sample_n(self):
+        """
+        Tests the sample_n function.
+        Checks if the function correctly samples n rows from the DataFrame.
+        """
+        sampled_df = self.df >> pp.sample_n(3)
+        self.assertEqual(len(sampled_df), 3)
+
+    def test_sample_frac(self):
+        """
+        Tests the sample_frac function.
+        Checks if the function correctly samples a fraction of rows from the DataFrame.
+        """
+        sampled_df = self.df >> pp.sample_frac(0.6)
+        self.assertEqual(len(sampled_df), 3)  # As the original df has 5 rows
+
     def test_select(self):
         """
         Tests the select function.
@@ -150,6 +175,15 @@ class TestDataManipulation(unittest.TestCase):
         summarised_df = self.df >> pp.group_by('B') >> pp.summarise({'A': 'sum', 'C': 'mean'})
         self.assertEqual(summarised_df['A'].tolist(), [3, 7, 5])
         self.assertEqual(summarised_df['C'].tolist(), [1, 1.5, 2])
+        
+    def test_tail(self):
+        """
+        Tests the tail function.
+        Checks if the function correctly returns the last n rows from the DataFrame.
+        """
+        tail_df = self.df >> pp.tail(3)
+        self.assertEqual(len(tail_df), 3)
+        pd.testing.assert_frame_equal(tail_df, self.df.iloc[-3:])
         
     def test_union(self):
         """

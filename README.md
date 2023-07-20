@@ -2,7 +2,31 @@
 
 [![PyPI version](https://badge.fury.io/py/pandaplyr.svg)](https://badge.fury.io/py/pandaplyr)
 
-pandaplyr is a Python package designed to provide a familiar and efficient data manipulation experience similar to the popular dplyr package in R. It aims to simplify and streamline the process of working with tabular data by providing a concise and intuitive syntax.
+PandaPlyr is a Python package designed to provide a familiar and efficient data manipulation experience similar to the popular dplyr package in R. It aims to simplify and streamline the process of working with tabular data by providing a concise and intuitive syntax. The purpose of pandaplyr is to make chained operations on pandas DataFrames easier and more readable.
+
+## Table of Contents
+
+- [<img src="images/PyPlyr_Icon.png" alt="Project Logo" width="80" height="80"> PandaPlyr](#<img-src="images/pyplyr_icon.png"-alt="project-logo"-width="80"-height="80">-pandaplyr)
+- [Install](#install)
+- [Use case and example](#use-case-and-example)
+- [Features](#features)
+    - [group_by() and summarise() / summarize()](#group_by()-and-summarise()-/-summarize())
+    - [mutate()](#mutate())
+    - [where()](#where())
+    - [select()](#select())
+    - [rename()](#rename())
+    - [arrange() and order_by()](#arrange()-and-order_by())
+    - [left_join(), right_join(), full_join()](#left_join(),-right_join(),-full_join())
+    - [union() and union_all()](#union()-and-union_all())
+    - [distinct()](#distinct())
+    - [fill_na()](#fill_na())
+    - [drop_na()](#drop_na())
+    - [sample_n() and sample_frac()](#sample_n()-and-sample_frac())
+    - [head() and tail()](#head()-and-tail())
+- [User-defined functions](#user-defined-functions)
+- [Future features](#future-features)
+- [Contact](#contact)
+
 
 ## Install
 
@@ -14,11 +38,7 @@ pip install PandaPlyr
 ```
 
 
-## Overview and vision for pandaplyr
-The purpose of pandaplyr is to make chained operations on pandas DataFrames easier and more readable.
-
-Use case and example
---------------------
+## Use case and example
 I have two dataframes - grade_df (left) and subject_df (right).
 
 
@@ -516,7 +536,7 @@ Removes records with numpy.nan, None, and (unlike pandas dropna) it works on num
 import pandas as pd
 from src.PandaPlyr import *
 df = pd.DataFrame({'A': [1, np.nan, None, np.inf, -np.inf]})
-new_df = df >> pp.drop_na()
+new_df = df >> drop_na()
 print(new_df)
 ```
 
@@ -527,6 +547,44 @@ print(new_df)
 
 ---------------------------------------------
 
+
+#### sample_n() and sample_frac()
+Randomly samples n rows (sample_n) or a fraction of rows (sample_frac) from the DataFrame. The random_state argument ensures reproducible results.
+```python
+import pandas as pd
+from src.PandaPlyr import *
+df = pd.DataFrame({'A': range(10)})
+new_df = df >> sample_n(5, random_state=42)
+print(new_df)
+```
+
+|    | A     |
+|---:|:------|
+|  0 | 8.0   |
+|  0 | 1.0   |
+|  0 | 5.0   |
+|  0 | 0.0   |
+|  0 | 2.0   |
+
+---------------------------------------------
+
+
+#### head() and tail()
+Return the first or last n rows of a DataFrame, respectively.
+```python
+import pandas as pd
+from src.PandaPlyr import *
+df = pd.DataFrame({'A': range(10)})
+new_df = df >> head(5) >> tail(2)
+print(new_df)
+```
+
+|    | A   |
+|---:|:----|
+|  0 | 3   |
+|  0 | 4   |
+
+---------------------------------------------
 
 
 
@@ -590,12 +648,6 @@ print(new_df)
 </td></tr> 
 </table>
 
-
-
-## To-do list
-
-- [X] Add error handling to pandaplyr.py
-- [ ] Add unit tests for new functions
 
 
 ## Future features

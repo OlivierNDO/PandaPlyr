@@ -661,6 +661,94 @@ def drop_na(df, *cols):
 
 
 
+@Pipe
+def sample_n(df, n, random_state=None):
+    """
+    A function to randomly sample n rows from a DataFrame.
+    This function can be used in a pyplyr pipeline.
+
+    Parameters:
+    -----------
+    df : pandas DataFrame
+        The DataFrame from which to sample.
+    n : int
+        The number of rows to sample.
+    random_state : int or numpy.random.RandomState, optional
+        A random state for reproducible results.
+
+    Returns:
+    --------
+    pandas DataFrame
+        A new DataFrame with n randomly sampled rows.
+    """
+    return df.sample(n, random_state=random_state)
+
+
+@Pipe
+def sample_frac(df, frac, random_state=None):
+    """
+    A function to randomly sample a fraction of rows from a DataFrame.
+    This function can be used in a pyplyr pipeline.
+
+    Parameters:
+    -----------
+    df : pandas DataFrame
+        The DataFrame from which to sample.
+    frac : float
+        The fraction of rows to sample.
+    random_state : int or numpy.random.RandomState, optional
+        A random state for reproducible results.
+
+    Returns:
+    --------
+    pandas DataFrame
+        A new DataFrame with frac randomly sampled rows.
+    """
+    return df.sample(frac=frac, random_state=random_state)
+
+
+@Pipe
+def head(df, n=5):
+    """
+    A function to return the first n rows from a DataFrame.
+    This function can be used in a pyplyr pipeline.
+
+    Parameters:
+    -----------
+    df : pandas DataFrame
+        The DataFrame from which to return the rows.
+    n : int, default 5
+        The number of rows to return.
+
+    Returns:
+    --------
+    pandas DataFrame
+        A new DataFrame with the first n rows.
+    """
+    return df.head(n)
+
+@Pipe
+def tail(df, n=5):
+    """
+    A function to return the last n rows from a DataFrame.
+    This function can be used in a pyplyr pipeline.
+
+    Parameters:
+    -----------
+    df : pandas DataFrame
+        The DataFrame from which to return the rows.
+    n : int, default 5
+        The number of rows to return.
+
+    Returns:
+    --------
+    pandas DataFrame
+        A new DataFrame with the last n rows.
+    """
+    return df.tail(n)
+
+
+
 # TO DO
 @Pipe
 def column_search(df):
