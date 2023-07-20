@@ -37,96 +37,68 @@ pip install PandaPlyr
 
 
 ## Use case and example
-I have two dataframes - grade_df (left) and subject_df (right).
-
-
-<table>
-<tr><td>
-
-| StudentID |   Subject   | Grade  |
-|:---------:|:-----------:|:------:|
-|     1     |   CompSci   |   80   |
-|     1     |   English   |   85   |
-|     1     |   History   |   75   |
-|     1     | LinearAlg   |   75   |
-|    ...    |     ...     |   ...  |
-
-
-
-</td><td>
-                 
-</td>
-<td>
-
-|      Subject     | SubjectType |
-|:----------------:|:-----------:|
-|     CompSci      |     STEM    |
-|   LinearAlg      |     STEM    |
-|    Philosophy    |  Humanities |
-|     English      |  Humanities |
-|     History      |  Humanities |
-
-
-</td></tr> 
-</table>
-
-Merge the dataframes and find the student with the highest average grade for Humanities classes only,
-but exclude any students ('StudentID') who are not enrolled in at least 2 humanities courses.
+Given the student grades by year dataset, find the 5 students with the most improved average grade across all subjects.
 
 ```python
-import pandas as pd
-import PandaPlyr as pp
-grade_df = pp.utils.read_grades_dataset()
-subject_df = pp.utils.read_subject_dataset()
+import PandaPlyr
+from PandaPlyr import *
+df = PandaPlyr.utils.read_grades_by_year_dataset()
 ```
+
+| StudentID | Year | Subject | Grade |
+|-----------|------|---------|-------|
+| 1         | 1    | Math    | 100   |
+| 1         | 2    | Math    | 87    |
+| 1         | 1    | Science | 89    |
+| 1         | 2    | Science | 93    |
+| 2         | 1    | English | 78    |
+| 2         | 2    | English | 86    |
+| 2         | 1    | Math    | 78    |
+| 2         | 2    | Math    | 79    |
+| 2         | 1    | Science | 89    |
+| 2         | 2    | Science | 64    |
+
+
+In PandaPlyr
+-------------
+```python
+top_five_improved = (
+    df >>
+    group_by('StudentID', 'Year') >>
+    summarise(AvgGrade = ('Grade', 'mean')) >>
+    mutate(GradeChange = 'np.where(Year == 1, -1 * AvgGrade, AvgGrade)') >>
+    group_by('StudentID') >>
+    summarise(GradeChange = ('GradeChange', 'sum')) >>
+    order_by('GradeChange', 'desc') >>
+    head(5)                        
+)
+```
+
+| StudentID | GradeChange |
+|-----------|-------------|
+| 66        | 26.0        |
+| 205       | 23.5        |
+| 380       | 22.0        |
+| 40        | 22.0        |
+| 170       | 22.0        |
+
 
 In pandas
 ----------
 ```python
-merged_df = pd.merge(grade_df, subject_df, on='Subject')
+avg_grades = df.groupby(['StudentID', 'Year'])['Grade'].mean().reset_index()
 
-humanities_df = merged_df[merged_df['SubjectType'] == 'Humanities']
+avg_grades['GradeChange'] = avg_grades.groupby('StudentID')['Grade'].diff()
 
-course_counts = (
-    humanities_df
-    .groupby('StudentID', as_index = False)
-    .agg(CourseCount = ('Subject', 'count'))
-)
-
-filtered_students =  course_counts.loc[course_counts['CourseCount'] >= 2][['StudentID']]
-
-top_student_pandas = (
-    humanities_df.loc[humanities_df['StudentID'].isin(filtered_students['StudentID'])]
-    .groupby('StudentID', as_index=False)
-    .agg(AverageGrade = ('Grade', 'mean'))
-    .sort_values('AverageGrade', ascending = False)
-    .head(1)
+top_five_improved = (
+    avg_grades[avg_grades['Year'] == 2]
+    .sort_values('GradeChange', ascending=False)
+    .head(5)
+    [['StudentID', 'GradeChange']]
 )
 ```
 
-In pandaplyr
-----------
-```python
-top_student_pp = (
-    grade_df >>
-    pp.inner_join(subject_df, 'Subject') >>
-    pp.where('SubjectType == "Humanities"') >>
-    pp.group_by('StudentID', 'SubjectType') >>
-    pp.summarise(AverageGrade = ('Grade', 'mean'), CourseCount = ('Grade', 'count')) >>
-    pp.where('(CourseCount >= 2)') >>
-    pp.mutate(MaxAverageGrade = 'AverageGrade.max()') >>
-    pp.where('MaxAverageGrade == AverageGrade') >>
-    pp.select('StudentID', 'AverageGrade')
-    )
-```
-
-The same answer takes 8 fewer lines, ~ 145 fewer characters, and is lot more readable.
-
-| StudentID | AverageGrade |
-|:---------:|:------------:|
-|     2     |     87.0     |
-
-
+The pandas code is fine, but PandaPlyr lets you use a single chained command that's more readable.
 
 
 ## Features
