@@ -628,3 +628,5 @@ print(new_df)
 
 ## Contact
 [![LinkedIn Badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/oliviernicholas/)
+
+<!-- Keywords: dplyr for Python, dplyr for pandas, PandaPlyr, data analysis, R for python, tidyverse for Python, magrittr, dplyr, pandas-->
